@@ -1,0 +1,55 @@
+---------------------------------------------------------------------------
+--AVERAGE SOL SCORES PER DIVISION BEFORE E-LEARNING IMPLEMENTATION---------
+---------------------------------------------------------------------------
+SELECT sch_year, div_num, subject, AVG(avg_score)
+FROM sol_test_data
+WHERE race = 'ALL'
+AND gender = 'ALL'
+AND disabil = 'ALL'
+AND disadva = 'ALL'
+AND lep = 'ALL'
+AND test_name = 'ALL'
+AND sch_year >=2011
+AND sch_year <=2013
+GROUP BY div_num, sch_year, subject
+Order BY div_num, sch_year
+
+-- this table returns 1995 rows, and groups things by year ----------------
+
+---------------------------------------------------------------------------
+---------------------------------------------------------------------------
+---------------------------------------------------------------------------
+
+
+---------------------------------------------------------------------------
+----------AVERAGE SOL SCORES FOR A DIVISION WITH THE GRANTS----------------
+---------------------------------------------------------------------------
+SELECT  sol.div_num, sol.sch_year, sol.subject, AVG(sol.avg_score), grants.total_elearn_funding, grants.total_tech_grant
+FROM sol_test_data AS sol
+  JOIN grants ON sol.div_num = grants.div_num
+    AND sol.sch_year = grants.year
+WHERE sol.test_name = 'ALL'
+  AND sol.div_num = 0
+  AND sol.test_level = 'ALL'
+  AND sol.subject IN ('MATH', 'SCI', 'HIST')
+  AND sol.sch_year > 2010
+GROUP BY sol.div_num, sol.sch_year, sol.subject,grants.total_elearn_funding, grants.total_tech_grant
+Order BY sch_year, subject, div_num;
+
+-- this table returns 12 rows, and groups them accordingly ----------------
+-- also the total elearn can be modified to the column per student --------
+
+------------------------------------------------------------------------
+-----AVERAGE SOL SCORES PER DIVISION, WITH GRANT FUNDING PER SCHOOL-----
+------------------------------------------------------------------------
+SELECT  sol.div_num, sol.sch_year, AVG(sol.avg_score), grants.total_elearn_funding, grants.total_tech_grant, grants.total_tech_grant/grants.num_of_schools AS grant_per_school
+FROM sol_test_data AS sol
+  JOIN grants ON sol.div_num = grants.div_num
+    AND sol.sch_year = grants.year
+WHERE sol.test_name = 'ALL'
+  AND sol.test_level = 'ALL'
+GROUP BY sol.div_num, sol.sch_year, grants.total_elearn_funding, grants.total_tech_grant, grant_per_school
+Order BY sch_year, div_num;
+
+--this table returns 532 rows and groups them by division and year--
+--------------------------------------------------------------------

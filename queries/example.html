@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    </head>
+    <body>
+
+        <h3>Group name</h3>
+
+            techx
+
+        <h3 style='wrapText'>Research question</h3>
+
+            What is the impact of VPSA Technology Grants, including e-Learning Backpack Initiative and Base VPSA 
+            Grants, on student success measurements including SOL scores and dropout rates in the state of Virginia?
+
+        <h3>Initial results</h3>
+        
+        <table border="1" cellpadding="3">
+            <tbody>
+                <tr>
+                    <td colspan="8" bgcolor="lightyellow">
+                    <pre>
+    SELECT  sol.sch_year, sol.subject, AVG(sol.avg_score), g.total_tech_grant    
+    FROM sol_test_data AS sol
+      JOIN grants AS g ON sol.div_num = g.div_num
+        AND sol.sch_year = g.year
+    WHERE sol.test_name = 'ALL'
+      AND sol.div_num = $1
+      AND sol.test_level = 'ALL'
+      AND sol.sch_year > 2010
+    GROUP BY sol.div_num, sol.sch_year, sol.subject, g.total_tech_grant
+    ORDER BY sch_year, subject;
+                    </pre>
+                    </td>
+                </tr>
+                <tr><td>Year</td>
+                    <td>ENGR</td>
+                    <td>ENGW</td>
+                    <td>HIST</td>
+                    <td>MATH</td>
+                    <td>SCI</td>
+                    <td>Average</td>
+                    <td>Total Tech Grants</td>
+                </tr>
+                <tr><td>2011</td>
+                    <td>461.2</td>
+                    <td>445.9</td>
+                    <td>448.6</td>
+                    <td>407.1</td>
+                    <td>462.1</td>
+                    <td>445.0</td>
+                    <td>$388,000</td>
+                </tr>
+                <tr><td>2012</td>
+                    <td>417.7</td>
+                    <td>433.4</td>
+                    <td>452.5</td>
+                    <td>418.0</td>
+                    <td>431.6</td>
+                    <td>430.6</td>
+                    <td>$388,000</td>
+                </tr>
+                <tr><td>2013</td>
+                    <td>417.6</td>
+                    <td>423.5</td>
+                    <td>445.1</td>
+                    <td>423.0</td>
+                    <td>425.3</td>
+                    <td>426.9</td>
+                    <td>$414,000</td>
+                </tr>
+                <tr><td>2014</td>
+                    <td>424.6</td>
+                    <td>421.7</td>
+                    <td>455.6</td>
+                    <td>428.8</td>
+                    <td>435.6</td>
+                    <td>433.3</td>
+                    <td>$480,000</td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <table border='1' cellpadding='3'>
+            <tbody>                
+                <tr rowspan='12'><td><div id="chart_div" style="width: 900px; height: 500px;"></div></td></tr>
+                <tr rowspan='12'><td><div id="chart_div1" style="width: 900px; height: 500px;"></div></td></tr>
+            </tbody>
+        </table>
+        
+        <script type="text/javascript">      
+            google.charts.load('current', {
+                'packages': ['corechart']
+            });
+            google.charts.setOnLoadCallback(drawVisualization);
+            google.charts.setOnLoadCallback(drawBackgroundColor);
+
+            function drawVisualization() {
+                // Some raw data (not necessarily accurate)
+                var data = google.visualization.arrayToDataTable([
+                    ['Year', 'ENGR', 'ENGW', 'HIST', 'MATH', 'SCI', 'Average'],
+                    ['2011', 461, 446, 449, 407.0625747, 462.1148915, 444.9791958],
+                    ['2012', 417.6806953, 433.3581716, 452.5004591, 418.0015705, 431.5990074, 430.6279808],
+                    ['2013', 417.6130677, 423.4798535, 445.1273828, 422.9870183, 425.3129187, 426.9040482],
+                    ['2014', 424.5529305, 421.8571429, 455.6356921, 428.7642631, 435.6427725, 433.2905602]
+                ]);
+
+
+                var options = {
+                    title: 'SOL Scores per School Year (Campbell County)',
+                    vAxis: {
+                        title: 'SOL Scores'
+                    },
+                    hAxis: {
+                        title: 'Year'
+                    },
+                    seriesType: 'bars',
+                    series: {
+                        5: {
+                            type: 'line'
+                        }
+                    }
+                };
+
+                var chart = new google.visualization.ComboChart(document.getElementById('chart_div'));
+                    chart.draw(data, options);
+            }
+
+            function drawBackgroundColor() {
+                var data = new google.visualization.DataTable();
+                data.addColumn('string', 'Year');
+                data.addColumn('number', 'Total');
+
+                data.addRows([
+                    ['2011', 388000],   ['2012', 388000],  ['2013', 414000],  ['2014', 480000]
+                ]);
+
+                var options = {
+                    hAxis: {
+                        title: 'Year'
+                    },
+                    vAxis: {
+                        title: 'Total Tech Grant'
+                    },
+                    backgroundColor: '#f1f8e9'
+                };
+
+            var chart = new google.visualization.LineChart(document.getElementById('chart_div1'));
+                chart.draw(data, options);
+            }
+        </script>
+
+    </body>
+</html>

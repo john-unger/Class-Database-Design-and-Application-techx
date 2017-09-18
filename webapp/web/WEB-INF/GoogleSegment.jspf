@@ -1,0 +1,133 @@
+<script type="text/javascript">
+    google.charts.load('current', {packages: ['corechart', 'line']});
+    google.charts.setOnLoadCallback(drawSOL);
+    google.charts.setOnLoadCallback(drawFunding);
+    google.charts.setOnLoadCallback(drawDonut);
+
+    function drawSOL() {
+        // Some raw data (not necessarily accurate)
+        var data1 = new google.visualization.DataTable();
+
+        data1.addColumn('string', 'Year');
+        data1.addColumn('number', 'ENGR');
+        data1.addColumn('number', 'ENGW');
+        data1.addColumn('number', 'HIST');
+        data1.addColumn('number', 'MATH');
+        data1.addColumn('number', 'SCI');
+        //                data1.addColumn('number', 'Average');
+
+        data1.addRows([
+    <%
+                            for (int[] row : query.getScores()) {
+                                int avg = 0;
+                                out.print("['" + row[0] + "', ");
+                                for (int i = 1; i < 6; i++) {
+                                    out.print(row[i] + ", ");
+                                    //                        avg += row[i];
+                                }
+                                //                    avg = avg / 5;
+                                //averages the rows
+                                out.println("],");
+                            }
+    %>
+        ]);
+
+        var options1 = {
+            width: 900,
+            height: 500,
+            title: 'SOL Scores in ' + get_div_name(document.getElementById("div_num").value),
+            vAxis: {
+                title: 'Average SOL Score'
+            },
+            hAxis: {
+                title: 'Year'
+            },
+            seriesType: 'bars',
+            series: {
+                5: {
+                    type: 'line'
+                }
+            }
+        };
+
+        var chart = new google.visualization.ComboChart(document.getElementById('chart_SOL_div'));
+        chart.draw(data1, options1);
+    }
+
+    function drawFunding() {
+        var data2 = new google.visualization.DataTable();
+        data2.addColumn('string', 'Year');
+        data2.addColumn('number', 'Division Funding');
+        data2.addColumn('number', 'State Funding');
+
+        data2.addRows([
+    <%
+                            if (query.div_num != 0) {
+                                int[][] divRow = query.getDps();
+                                int[][] stateRow = query.getStateDps();
+                                for (int index = 0; index < divRow.length; index++) {
+                                    out.println("['" + divRow[index][0] + "', " + divRow[index][1] + ", " + stateRow[index][1] + "],");
+                                }
+                            } else {
+                                for (int[] row : query.getStateDps()) {
+                                    out.println("['" + row[0] + "', , " + row[1] + "],");
+                                }
+                            }
+    %>
+        ]);
+
+        var options2 = {
+            width: 900,
+            height: 500,
+            title: 'Funding Per Student Enrolled in ' + get_div_name(document.getElementById("div_num").value),
+            hAxis: {
+                title: 'School Year'
+            },
+            vAxis: {
+                title: 'Dollar Per Student',
+                format: '$###'
+
+            },
+        };
+
+        var chart = new google.visualization.LineChart(document.getElementById('chart_Fun_div'));
+        chart.draw(data2, options2);
+    }
+
+    function drawDonut() {
+        var data3 = new google.visualization.DataTable();
+        data3.addColumn('string', 'Year');
+        data3.addColumn('number', 'Division Avg');
+        data3.addColumn('number', 'State Avg');
+
+        data3.addRows([
+    <%
+                            if (query.div_num != 0) {
+                                int[][] divRow = query.getInternet();
+                                int[][] stateRow = query.stateInternet();
+                                for (int index = 0; index < divRow.length; index++) {
+                                    out.println("['" + divRow[index][0] + "', " + divRow[index][1] + ", " + stateRow[index][1] + "],");
+                                }
+                            } else {
+                                for (int[] row : query.stateInternet()) {
+                                    out.println("['" + row[0] + "', , " + row[1] + "],");
+                                }
+                            }
+    %>
+        ]);
+
+        var options3 = {
+            width: 900,
+            height: 500,
+            title: 'Household Internet Access in ' + get_div_name(document.getElementById("div_num").value),
+            vAxis: {
+                minValue: 0,
+                maxValue: 100,
+                format: '#\'%\''
+            }
+        };
+
+        var chart = new google.visualization.AreaChart(document.getElementById('donutchart'));
+        chart.draw(data3, options3);
+    }
+</script>

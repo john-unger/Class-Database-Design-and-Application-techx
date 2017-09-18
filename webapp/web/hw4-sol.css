@@ -1,0 +1,40 @@
+.title {
+    font-size: 18pt;
+    font-weight: bold;
+    text-align: center;
+}
+
+h1 {
+    font-size: 15pt;
+    padding-top: 5px;
+}
+
+pre {
+    background-color: whitesmoke;
+}
+table {
+    width: 375px;
+    height: 125px;
+    border: 1px solid black;
+    
+}
+
+table .even {
+}
+
+table .odd {
+    background-color: ghostwhite;
+}
+    picture {
+    border-radius: 50% 50% 50% 50%;
+    width: 5px;
+    height: auto;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    filter: grayscale(0);
+    -webkit-filter: grayscale(0);
+    -moz-filter: grayscale(0);
+    -o-filter: grayscale(0);
+    -ms-filter: grayscale(0);
+    }

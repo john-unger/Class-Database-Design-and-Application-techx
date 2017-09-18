@@ -1,0 +1,118 @@
+
+h1 {
+    text-align: center;
+}
+
+h2 {
+    text-align: center;
+}
+
+h3 {
+    text-align: center;
+}
+
+p {
+    text-align: left;
+}
+
+p.index{
+    text-align: center;
+}
+
+p.body {
+    text-align: center;  
+}
+
+p.top {
+
+    text-align: center;  
+}
+
+#logo {
+    border-radius: 50% 50% 50% 50%;
+    width: 100px;
+    height: 100px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    filter: grayscale(0);
+    -webkit-filter: grayscale(0);
+    -moz-filter: grayscale(0);
+    -o-filter: grayscale(0);
+    -ms-filter: grayscale(0);
+}
+
+
+form {
+    margin: 0 auto;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+table {
+    border-spacing: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 10px;
+    padding-bottom: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+
+label {
+    text-align: center;
+}
+
+
+div {
+    margin-top: 0;
+    margin-bottom: auto;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+
+
+
+#key {
+    border: 5px solid;
+    border-radius: 15px;
+}
+
+
+
+
+.pic_of_us {
+    border-radius: 50% 50% 50% 50%;
+    width: 250px;
+    height: auto;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    filter: grayscale(0);
+    -webkit-filter: grayscale(0);
+    -moz-filter: grayscale(0);
+    -o-filter: grayscale(0);
+    -ms-filter: grayscale(0);
+}
+.pic_of_us:hover {
+    opacity: 0.8;
+    filter: alpha(opacity=50);
+    filter: grayscale(1);
+    -webkit-filter: grayscale(1);
+    -moz-filter: grayscale(1);
+    -o-filter: grayscale(1);
+    -ms-filter: grayscale(1);
+
+}
+#footer {
+    background-color:black;
+    color:white;
+    clear:both;
+    text-align:center;
+    padding:5px; 
+}
+

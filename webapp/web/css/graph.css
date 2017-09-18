@@ -1,0 +1,10 @@
+
+div.graph {
+    border-style: solid;
+    border-color: #660066;
+    width: 914px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 20px;
+    padding: 4px;
+}
